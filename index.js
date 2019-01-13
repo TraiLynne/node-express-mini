@@ -4,6 +4,8 @@ const express = require('express');
 const server = express();
 const port = 4000;
 
+const db = require('./data/db')
+
 server.get('/', (req, res) => {
     res.send('Hello World');
 });
@@ -49,5 +51,16 @@ server.get('/sins', (req, res) => {
         .json(sins);
 });
 
+
+server.get('/users', (req, res) => {
+    db
+        .find()
+        .then(users => {
+            res.status(200).json(users)
+        })
+        .catch(err => {
+            res.status(500).send('Error Occurred. Please Try Again')
+        });
+});
 
 server.listen(port, () => console.log('API running on port 4000'));
