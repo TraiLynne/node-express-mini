@@ -6,10 +6,23 @@ const port = 4000;
 
 const db = require('./data/db')
 
+server.use(express.json())
+
 server.get('/', (req, res) => {
     res.send('Hello World');
 });
+// C - Create
+server.post('/sins', (req, res) => {
+    
+    res
+        .status(201)
+        .json({
+            url: '/sins',
+            operation: 'POST'
+        });
+});
 
+// R - Read
 server.get('/sins', (req, res) => {
     const sins = [
         {
@@ -50,6 +63,22 @@ server.get('/sins', (req, res) => {
         .status(200)
         .json(sins);
 });
+
+// U - Update 
+server.put('/hobbits', (req, res) => {
+    res
+        .status(200)
+        .json({
+            url: '/sins',
+            operation: 'PUT'
+        });
+});
+
+// D - Destroy
+server.delete('/hobbits', (req, res) => {
+    res.status(204);
+});
+
 
 
 server.get('/users', (req, res) => {
