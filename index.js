@@ -113,18 +113,36 @@ server.delete('/sins/:id', (req, res) => {
 
 
 // *** ==== USERS PORTION ==== *** //
-
 // C - Create
-server.post('/sins', (req, res) => {
-    console.log(req.body)
-    const sin = req.body;
-    sin.id = ++currentId;
+server.post('/users', async (req, res) => {
+    const newUser = req.body;
+    
+    try {
+        if (!newUser.name || !newUser.bio) {
+            res
+                .status(400)
+                .json({
+                    errorMessage: "Please provide name and bio for the user."
+                });
+        } else {
+            let nextId = await db.insert(newUser);
 
-    sins.push(sin);
+            newUser.id = nextId.id;
+            console.log(newUser);
+            res
+                .status(201)
+                .json(newUser);
 
-    res
-        .status(201)
-        .json(sins);
+        }
+    } catch (err) {
+        console.log(err);
+        res
+            .status(500)
+            .json({
+                error: "There was an error while saving the user to the database"
+            });
+    }
+    
 });
 
 // R - READ
