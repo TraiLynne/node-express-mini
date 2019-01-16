@@ -8,6 +8,11 @@ const db = require('./data/db');
 
 server.use(express.json());
 
+// Custom Middleware
+
+
+// SINS Logic
+
 const sins = [{
         id: 0,
         name: 'Meliodas'
@@ -255,4 +260,10 @@ server.delete('/api/users/:id', async (req, res) => {
     }
 });
 
+
+server.use(function (req, res) {
+    res
+        .status(404)
+        .send('Ain\'t nobody got time for that');
+})
 server.listen(port, () => console.log('API running on port 4000'));
