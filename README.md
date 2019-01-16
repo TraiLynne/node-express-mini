@@ -76,9 +76,9 @@ When the client makes a `POST` request to `/api/users`:
   - [x] return the newly created _user document_.
 
 - If there's an error while saving the _user_:
-  - cancel the request.
-  - respond with HTTP status code `500` (Server Error).
-  - return the following JSON object: `{ error: "There was an error while saving the user to the database" }`.
+  - [x] cancel the request.
+  - [x] respond with HTTP status code `500` (Server Error).
+  - [x] return the following JSON object: `{ error: "There was an error while saving the user to the database" }`.
 
 When the client makes a `GET` request to `/api/users`:
 
