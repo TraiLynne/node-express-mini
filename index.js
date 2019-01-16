@@ -114,7 +114,7 @@ server.delete('/sins/:id', (req, res) => {
 
 // *** ==== USERS PORTION ==== *** //
 // C - Create
-server.post('/users', async (req, res) => {
+server.post('/api/users', async (req, res) => {
     const newUser = req.body;
     
     try {
@@ -146,16 +146,22 @@ server.post('/users', async (req, res) => {
 });
 
 // R - READ
-server.get('/users', (req, res) => {
+server.get('/api/users', (req, res) => {
     db
         .find()
         .then(users => {
-            res.status(200).json(users)
+            res
+                .status(200)
+                .json(users);
         })
         .catch(err => {
-            res.status(500).send('Error Occurred. Please Try Again')
+            res.status(500).json({
+                error: "The users information could not be retrieved."
+            });
         });
+    
 });
+
 // U - UPDATE
 // D - DESTROY
 
