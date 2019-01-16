@@ -162,6 +162,34 @@ server.get('/api/users', (req, res) => {
     
 });
 
+server.get('/api/users/:id', async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        let user = await db.findById(id);
+        console.log(user);
+
+        if (!user) {
+            res
+                .status(404)
+                .json({
+                    message: "The user with the specified ID does not exist."
+                });
+        } else {
+            res
+                .status(200)
+                .json(user);
+        }
+
+    } catch (err) {
+        res
+            .status(500)
+            .json({
+                error: "The user information could not be retrieved."
+            });
+    }
+});
+
 // U - UPDATE
 // D - DESTROY
 
