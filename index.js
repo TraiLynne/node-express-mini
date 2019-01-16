@@ -191,7 +191,38 @@ server.get('/api/users/:id', async (req, res) => {
 });
 
 // U - UPDATE
+server.put('/api/users/:id', async (req, res) => {
+    const id = req.params.id;
+    
+    try {
+        let user = await db.findById(id);
+        let updatedUser = req.body;
 
+        if (!user) {
+            res
+                .status(404)
+                .json({
+                    message: "The user with the specified ID does not exist."
+                });
+        } else if (!updatedUser.name | !updatedUser.bio) {
+            console.log("Missing info");
+            res
+                .status(400)
+                .json({
+                    errorMessage: "Please provide name and bio for the user."
+                });
+        } else {
+            await db.update(id, updatedUser);
+            let success = await db.findById(id);
+            
+            res
+                .status(200)
+                .json(success);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+})
 
 // D - DESTROY
 server.delete('/api/users/:id', async (req, res) => {
