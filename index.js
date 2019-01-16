@@ -191,6 +191,37 @@ server.get('/api/users/:id', async (req, res) => {
 });
 
 // U - UPDATE
+
+
 // D - DESTROY
+server.delete('/api/users/:id', async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        let user = await db.findById(id);
+
+        if (!user) {
+            res
+                .status(404)
+                .json({
+                    message: "The user with the specified ID does not exist."
+                });
+        } else {
+            await db.remove(id);
+            let users = await db.find();
+
+            res
+                .status(200)
+                .json(users);
+            
+        }
+    } catch(err) {
+        res
+            .status(500)
+            .json({
+                error: "The user could not be removed"
+            });
+    }
+});
 
 server.listen(port, () => console.log('API running on port 4000'));
