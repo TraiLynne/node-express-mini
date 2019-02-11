@@ -5,6 +5,7 @@ const server = express();
 const port = 4000; // Port watching for traffic
 
 const db = require('./data/db');
+const mainRouter = require('./routers');
 
 server.use(express.json());
 
@@ -261,9 +262,6 @@ server.delete('/api/users/:id', async (req, res) => {
 });
 
 
-server.use(function (req, res) {
-    res
-        .status(404)
-        .send('Ain\'t nobody got time for that');
-})
+server.use('/api', mainRouter);
+
 server.listen(port, () => console.log('API running on port 4000'));
